@@ -6,6 +6,7 @@
 // For std::isalpha and std::isupper
 #include <cctype>
 #include "TransformChar.hpp"
+#include "DealingWithFiles.hpp"
 
 bool processCommandLine(
  const std::vector<std::string>& args,
@@ -119,24 +120,27 @@ int main(int argc, char* argv[])
   // Read in user input from stdin/file
   // Warn that input file option not yet implemented
   if (!inputFile.empty()) {
-    std::cout << "[warning] input from file ('"
-              << inputFile
-              << "') not implemented yet, using stdin\n";
+    std::string Input{in(inputFile)};
+    for(char i:Input)
+      {
+	inputText += transformChar(i);
+      }
   }
 
   // Loop over each character from user input
   // (until Return then CTRL-D (EOF) pressed)
-  while(std::cin >> inputChar)
+  else
   {
-    inputText += transformChar(inputChar);
+    while(std::cin >> inputChar)
+      {
+	inputText += transformChar(inputChar);
+      }
   }
 
   // Output the transliterated text
   // Warn that output file option not yet implemented
   if (!outputFile.empty()) {
-    std::cout << "[warning] output to file ('"
-              << outputFile
-              << "') not implemented yet, using stdout\n";
+    out(inputText,outputFile);
   }
 
   std::cout << inputText << std::endl;
