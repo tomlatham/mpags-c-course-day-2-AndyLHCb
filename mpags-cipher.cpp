@@ -10,7 +10,7 @@
 #include "TransformChar.hpp"
 #include "DealingWithFiles.hpp"
 #include "CommandLine.hpp"
-#include "Crypt.hpp"
+#include "RunCaesarCipher.hpp"
 
 // Main function of the mpags-cipher program
 int main(int argc, char* argv[])
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
   std::string inputFile {""};
   std::string outputFile {""};
   bool encrypt {true};
-  int key{1};
+  size_t key{1};
 
   // Process command line arguments - ignore zeroth element, as we know this to
   // be the program name and don't need to worry about it
@@ -75,8 +75,13 @@ int main(int argc, char* argv[])
   // Read in user input from stdin/file
   // Warn that input file option not yet implemented
   if (!inputFile.empty()) {
-    std::string Input{in(inputFile)};//from DealingWithFiles.cpp
-    for(char i:Input)
+    std::string tmpInput{};
+    bool readOK {in(inputFile, tmpInput)};//from DealingWithFiles.cpp
+    if ( !readOK ) {
+	    std::cerr << "[error] Problem reading from file " << inputFile << std::endl;
+	    return 1;
+    }
+    for(char i:tmpInput)
       {
 	inputText += transformChar(i);//from TransformChar.cpp
       }
@@ -92,15 +97,19 @@ int main(int argc, char* argv[])
       }
   }
   
-  inputText = crypt(inputText,encrypt,key);
+  std::string outputText { runCaesarCipher(inputText,encrypt,key) };
 
   // Output the transliterated text
   if (!outputFile.empty()) {
-    out(inputText,outputFile);//from DealingWithFiles.cpp
+    bool writtenOK {out(outputFile,outputText)};//from DealingWithFiles.cpp
+    if ( !writtenOK ) {
+	    std::cerr << "[error] Problem writing to file " << outputFile << std::endl;
+	    return 1;
+    }
     std::cout << "File Written" << std::endl;
   }
 
-  else{std::cout << inputText << std::endl;}
+  else{std::cout << outputText << std::endl;}
 
   // No requirement to return from main, but we do so for clarity
   // and for consistency with other functions

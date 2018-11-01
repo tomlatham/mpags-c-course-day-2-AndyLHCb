@@ -14,8 +14,8 @@ add_executable(mpags-cipher
  MPAGSCipher/DealingWithFiles.hpp
  MPAGSCipher/CommandLine.cpp
  MPAGSCipher/CommandLine.hpp
- MPAGSCipher/Crypt.hpp
- MPAGSCipher/Crypt.cpp)
+ MPAGSCipher/RunCaesarCipher.hpp
+ MPAGSCipher/RunCaesarCipher.cpp)
 
 target_compile_features(mpags-cipher
   PRIVATE cxx_auto_type cxx_range_for cxx_uniform_initialization

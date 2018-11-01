@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-bool out(std::string Output,std::string Filename);
-std::string in(std::string Filename);
+bool out(const std::string& filename, const std::string& output);
+bool in(const std::string& filename, std::string& input);
   
 #endif

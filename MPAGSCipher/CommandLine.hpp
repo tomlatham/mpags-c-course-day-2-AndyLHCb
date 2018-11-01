@@ -13,6 +13,6 @@ bool processCommandLine(
  std::string& inputFileName,
  std::string& outputFileName,
  bool& encrypt,
- int& key);
+ size_t& key);
 
 #endif

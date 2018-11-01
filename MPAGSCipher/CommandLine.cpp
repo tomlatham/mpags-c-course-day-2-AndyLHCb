@@ -7,7 +7,7 @@ bool processCommandLine(
  std::string& inputFileName,
  std::string& outputFileName,
  bool& encrypt,
- int& key)
+ size_t& key)
 {
   
   // Add a typedef that assigns another name for the given type for clarity
@@ -28,7 +28,7 @@ bool processCommandLine(
       if (i == nargs-1) {
 	std::cerr << "[error] -i requires a filename argument" << std::endl;
 	// exit main with non-zero return to indicate failure
-	return 1;
+	return true;
       }
       else {
 	// Got filename, so assign value and advance past it
@@ -42,7 +42,7 @@ bool processCommandLine(
       if (i == nargs-1) {
 	std::cerr << "[error] -o requires a filename argument" << std::endl;
 	// exit main with non-zero return to indicate failure
-	return 1;
+	return true;
       }
       else {
 	// Got filename, so assign value and advance past it
@@ -53,11 +53,15 @@ bool processCommandLine(
     else if(args[i] == "-k"){
 	if (i == nargs-1){
 	std::cerr << "[error] -k requires a key value" << std::endl;
-	return 1;				       
+	return true;				       
       }
       else {
 	std::string temp{args[i+1]};
-       	key = std::atoi(temp.c_str());
+	if ( temp.front() == '-' ) {
+	  std::cerr << "[error] key should be a positive integer" << std::endl;
+	  return true;
+	}
+       	key = std::stoul(temp);
         ++i;
       }
     }
@@ -71,8 +75,8 @@ bool processCommandLine(
       // Have an unknown flag to output error message and return non-zero
       // exit status to indicate failure
       std::cerr << "[error] unknown argument '" << args[i] << "'\n";
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
