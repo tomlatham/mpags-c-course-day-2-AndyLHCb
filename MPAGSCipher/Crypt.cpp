@@ -14,7 +14,7 @@ std::string crypt(const std::string input,const bool encrypt,const int key)
 		for(int i{0};i<26;++i){
 			if(abet[i]==c){
 				int position = i + direction * key;
-				position = (position % 26) + 26 % 26;
+				position = ((position % 26) + 26) % 26;
 				output += abet[position];			
 			}
 		}
