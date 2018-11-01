@@ -11,7 +11,11 @@ add_executable(mpags-cipher
  MPAGSCipher/TransformChar.cpp
  MPAGSCipher/TransformChar.hpp
  MPAGSCipher/DealingWithFiles.cpp
- MPAGSCipher/DealingWithFiles.hpp)
+ MPAGSCipher/DealingWithFiles.hpp
+ MPAGSCipher/CommandLine.cpp
+ MPAGSCipher/CommandLine.hpp
+ MPAGSCipher/Crypt.hpp
+ MPAGSCipher/Crypt.cpp)
 
 target_compile_features(mpags-cipher
   PRIVATE cxx_auto_type cxx_range_for cxx_uniform_initialization

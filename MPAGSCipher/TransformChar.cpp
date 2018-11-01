@@ -1,15 +1,12 @@
 #include "TransformChar.hpp"
 
 std::string transformChar(const char in_char)
-{
-  /*
-    This performs the relevant editting of the input chars and returns them as a string. in_char is the input char, obviously.
-   */
+{ 
   std::string returnStr{""};
- // Uppercase alphabetic characters
-    if (std::isalpha(in_char)) {
-      returnStr += std::toupper(in_char);
-    }
+
+  if(std::isalpha(in_char)){
+	returnStr += std::toupper(in_char);
+  } 
 
     // Transliterate digits to English words
     switch (in_char) {
@@ -44,6 +41,7 @@ std::string transformChar(const char in_char)
 	returnStr += "NINE";
 	break;
     }
+
     return returnStr;
     //we don't add non-alphanumeric chars
 }
